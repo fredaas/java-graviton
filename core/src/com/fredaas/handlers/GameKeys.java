@@ -3,7 +3,10 @@ package com.fredaas.handlers;
 public class GameKeys {
 
     public static enum Key {
-        LEFT(0), RIGHT(1), DOWN(2), UP(3);
+        LEFT(0),
+        RIGHT(1),
+        DOWN(2),
+        UP(3);
 
         int value;
 

@@ -9,7 +9,10 @@ public class GameStateManager {
     private GameState gameState;
 
     public static enum State {
-        MENU(0), PLAY(1), GAMEOVER(2), HIGHSCORES(3);
+        MENU(0),
+        PLAY(1),
+        GAMEOVER(2),
+        HIGHSCORES(3);
 
         int current;
 
