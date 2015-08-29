@@ -20,12 +20,12 @@ public class Main implements ApplicationListener {
     private GameStateManager gsm;
     private ShapeRenderer sr;
 
-    public Main() {
-    }
+    public Main() {}
 
     private void init() {
-        Font.init();
+        sr = new ShapeRenderer();
         gsm = new GameStateManager();
+        Font.init();
     }
 
     @Override

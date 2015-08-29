@@ -7,10 +7,8 @@ public abstract class GameState {
 
     protected GameStateManager gsm;
 
-    public abstract void update(float dt);
-
-    public abstract void draw(ShapeRenderer sr);
-
     public abstract void init();
+    public abstract void update(float dt);
+    public abstract void draw(ShapeRenderer sr);
 
 }

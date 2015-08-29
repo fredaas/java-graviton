@@ -3,6 +3,7 @@ package com.fredaas.handlers;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.fredaas.states.GameState;
 import com.fredaas.states.MenuState;
+import com.fredaas.states.PlayState;
 
 public class GameStateManager {
 
@@ -22,16 +23,19 @@ public class GameStateManager {
     }
 
     public GameStateManager() {
-        loadState(State.MENU);
+        loadState(State.PLAY);
     }
 
     private void loadState(State state) {
         switch (state) {
-        case MENU:
-            gameState = new MenuState(this);
-            break;
-        default:
-            break;
+            case MENU:
+                gameState = new MenuState(this);
+                break;
+            case PLAY:
+                gameState = new PlayState(this);
+                break;
+            default:
+                break;
         }
     }
 
