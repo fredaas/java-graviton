@@ -34,5 +34,9 @@ public class GameKeys {
     public static void setKey(Key k, boolean b) {
         curr[k.value] = b;
     }
+    
+    public static boolean isDown(Key k) {
+        return curr[k.value];
+    }
 
 }

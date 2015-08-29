@@ -6,8 +6,7 @@ import com.fredaas.handlers.GameKeys.Key;
 
 public class KeyInputProcessor extends InputAdapter {
 
-    public KeyInputProcessor() {
-    }
+    public KeyInputProcessor() {}
 
     @Override
     public boolean keyDown(int keyCode) {
