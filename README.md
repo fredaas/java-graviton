@@ -1,3 +1,3 @@
 ## Graviton
 
-Simple 2D spaceshooter utilising libGDX and LWJGL for OpenGL graphics rendering.
+Simple 2D space shooter utilizing libGDX and LWJGL for OpenGL graphics rendering.
