@@ -8,6 +8,8 @@ import com.fredaas.main.Game;
 public class Asteroid extends SpaceObject {
     
     private int numPoints;
+    private float delta[];
+    private float angleOffset;
     
     public Asteroid (float radius) {
         this.x = (float) Math.random() * Game.WIDTH;
@@ -18,22 +20,33 @@ public class Asteroid extends SpaceObject {
 
     @Override
     public void init() {
-        numPoints = 10;
-        float angleOffset = (2 * PI) / numPoints;
+        numPoints = 12;
+        angleOffset = (2 * PI) / numPoints;
         posx = new float[numPoints];
         posy = new float[numPoints];
-        
+        delta = new float[numPoints];
+        rotationSpeed = MathUtils.random(-1, 1);
         
         for (int i = 0; i < numPoints; i++) {
-            float delta = (float) Math.random() * radius / 2 + radius / 2;
-            posx[i] = x + MathUtils.cos(rad) * delta;
-            posy[i] = y + MathUtils.sin(rad) * delta;
+            delta[i] = MathUtils.random(radius / 2, radius);
+            posx[i] = x + MathUtils.cos(rad) * delta[i];
+            posy[i] = y + MathUtils.sin(rad) * delta[i];
+            rad += angleOffset;
+        }
+    }
+    
+    private void setOrientation() {
+        for (int i = 0; i < numPoints; i++) {
+            posx[i] = x + MathUtils.cos(rad) * delta[i];
+            posy[i] = y + MathUtils.sin(rad) * delta[i];
             rad += angleOffset;
         }
     }
 
     @Override
     public void update(float dt) {
+        rad += rotationSpeed * dt;
+        setOrientation();
     }
 
     @Override
