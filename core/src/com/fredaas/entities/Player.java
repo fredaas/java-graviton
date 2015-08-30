@@ -3,6 +3,7 @@ package com.fredaas.entities;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
+import com.fredaas.main.Game;
 
 public class Player extends SpaceObject {
     
@@ -11,7 +12,8 @@ public class Player extends SpaceObject {
     private boolean up = false;
     
     public Player(float x, float y) {
-        super(x, y, 0);
+        this.x = Game.WIDTH / 2;
+        this.y = Game.HEIGHT / 2;
         init();
     }
 

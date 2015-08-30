@@ -6,7 +6,7 @@ public abstract class SpaceObject {
 
     protected float x;
     protected float y;
-    protected float r;
+    protected float radius;
     protected float posx[];
     protected float posy[];
     protected float rotationSpeed = 3;
@@ -18,10 +18,7 @@ public abstract class SpaceObject {
     protected final float PI = 3.141592654f;
     protected float rad = PI / 2;
 
-    public SpaceObject(float x, float y, float r) {
-        this.x = x;
-        this.y = y;
-    }
+    public SpaceObject() {}
     
     public abstract void init();
     public abstract void update(float dt);
