@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.fredaas.handlers.Font;
 import com.fredaas.handlers.GameStateManager;
-import com.fredaas.main.Main;
+import com.fredaas.main.Game;
 
 public class MenuState extends GameState {
 
@@ -38,10 +38,10 @@ public class MenuState extends GameState {
     public void draw(ShapeRenderer sr) {
         sb.begin();
         text.setText(bmfTitle, menuTitle);
-        bmfTitle.draw(sb, text, (Main.WIDTH - text.width) / 2, Main.HEIGHT * 0.70f);
+        bmfTitle.draw(sb, text, (Game.WIDTH - text.width) / 2, Game.HEIGHT * 0.70f);
         for (int i = 0; i < menuOptions.length; i++) {
             text.setText(bmfOptions, menuOptions[i]);
-            bmfOptions.draw(sb, text, (Main.WIDTH - text.width) / 2, Main.HEIGHT * 0.50f - i * 60);
+            bmfOptions.draw(sb, text, (Game.WIDTH - text.width) / 2, Game.HEIGHT * 0.50f - i * 60);
         }
         sb.end();
     }

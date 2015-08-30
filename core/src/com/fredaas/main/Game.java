@@ -11,7 +11,7 @@ import com.fredaas.handlers.Font;
 import com.fredaas.handlers.GameStateManager;
 import com.fredaas.handlers.KeyInputProcessor;
 
-public class Main implements ApplicationListener {
+public class Game implements ApplicationListener {
 
     public static int WIDTH;
     public static int HEIGHT;
@@ -20,7 +20,7 @@ public class Main implements ApplicationListener {
     private GameStateManager gsm;
     private ShapeRenderer sr;
 
-    public Main() {}
+    public Game() {}
 
     private void init() {
         sr = new ShapeRenderer();

@@ -5,7 +5,7 @@ import com.fredaas.entities.Player;
 import com.fredaas.handlers.GameKeys;
 import com.fredaas.handlers.GameKeys.Key;
 import com.fredaas.handlers.GameStateManager;
-import com.fredaas.main.Main;
+import com.fredaas.main.Game;
 
 public class PlayState extends GameState {
     
@@ -18,17 +18,20 @@ public class PlayState extends GameState {
     
     @Override
     public void init() {
-        player = new Player(Main.WIDTH / 2, Main.HEIGHT / 2);        
+        player = new Player(Game.WIDTH / 2, Game.HEIGHT / 2);        
     }
     
     @Override
     public void update(float dt) {
+        Game.cam.position.set(player.getX(), player.getY(), 0);
+        Game.cam.update();
         player.update(dt);
         handleInput();
     }
 
     @Override
     public void draw(ShapeRenderer sr) {
+        sr.setProjectionMatrix(Game.cam.combined);
         player.draw(sr);
     }
     

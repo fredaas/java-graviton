@@ -4,7 +4,7 @@ import java.awt.Toolkit;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.fredaas.main.Main;
+import com.fredaas.main.Game;
 
 public class DesktopLauncher {
 
@@ -17,7 +17,7 @@ public class DesktopLauncher {
         config.height = 600;
         config.resizable = false;
         config.fullscreen = false;
-        new LwjglApplication(new Main(), config);
+        new LwjglApplication(new Game(), config);
     }
 
 }
