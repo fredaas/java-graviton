@@ -3,9 +3,11 @@ package com.fredaas.states;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.entities.Asteroid;
 import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
+import com.fredaas.entities.Star;
 import com.fredaas.handlers.GameKeys;
 import com.fredaas.handlers.GameKeys.Key;
 import com.fredaas.handlers.GameStateManager;
@@ -15,6 +17,7 @@ public class PlayState extends GameState {
     
     private Player player;
     private ArrayList<Asteroid> asteroids;
+    private ArrayList<Star> stars;
     private LineMap map;
 
     public PlayState(GameStateManager gsm) {
@@ -26,8 +29,10 @@ public class PlayState extends GameState {
     public void init() {
         player = new Player(Game.WIDTH / 2, Game.HEIGHT / 2);     
         asteroids = new ArrayList<Asteroid>();
+        stars = new ArrayList<Star>();
         map = new LineMap(12, 2000);
         createAsteroids(10);
+        createStars(500);
     }
     
     @Override
@@ -82,11 +87,31 @@ public class PlayState extends GameState {
         for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).draw(sr);
         }
+        
+        for (int i = 0; i < stars.size(); i++) {
+            stars.get(i).draw(sr);
+        }
     }
     
     private void createAsteroids(int num) {
         for (int i = 0; i < num; i++) {
             asteroids.add(new Asteroid(20));
+        }
+    }
+    
+    private void createStars(int num) {
+        float x;
+        float y;
+        
+        for (int i = 0; i < num; i++) {
+            do {
+                x = MathUtils.random(map.getX() - map.getRadius(), 
+                        map.getX() + map.getRadius());
+                y = MathUtils.random(map.getY() - map.getRadius(), 
+                        map.getY() + map.getRadius());
+            }
+            while (!map.contains(x, y));
+            stars.add(new Star(x, y));
         }
     }
     

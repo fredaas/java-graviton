@@ -54,6 +54,10 @@ public abstract class SpaceObject {
         return y;
     }
     
+    public float getRadius() {
+        return radius;
+    }
+    
     public abstract void init();
     public abstract void update(float dt);
     public abstract void draw(ShapeRenderer sr);

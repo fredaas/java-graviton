@@ -7,8 +7,6 @@ import com.fredaas.main.Game;
 
 public class LineMap extends SpaceObject {
     
-    private float centerX;
-    private float centerY;
     private int numPoints;
 
     public LineMap(int numPoints, float radius) {
@@ -18,8 +16,8 @@ public class LineMap extends SpaceObject {
     }
     
     public void init() {
-        centerX = Game.WIDTH / 2;
-        centerY = Game.HEIGHT / 2;
+        x = Game.WIDTH / 2;
+        y = Game.HEIGHT / 2;
         posx = new float[numPoints];
         posy = new float[numPoints];
         createMap();
@@ -29,12 +27,12 @@ public class LineMap extends SpaceObject {
         float radOffset = 2 * PI / numPoints;
         
         for (int i = 0; i < numPoints; i++) {
-            posx[i] = centerX + MathUtils.cos(rad) * radius;
-            posy[i] = centerY + MathUtils.sin(rad) * radius;
+            posx[i] = x + MathUtils.cos(rad) * radius;
+            posy[i] = y + MathUtils.sin(rad) * radius;
             rad += radOffset;
         }
     }
-
+    
     @Override
     public void update(float dt) {}
     
