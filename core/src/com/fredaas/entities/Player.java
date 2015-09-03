@@ -10,6 +10,7 @@ public class Player extends SpaceObject {
     private boolean left = false;
     private boolean right = false;
     private boolean up = false;
+    private boolean dead = false;
     
     public Player(float x, float y) {
         this.x = Game.WIDTH / 2;
@@ -47,6 +48,10 @@ public class Player extends SpaceObject {
         up = b;
     }
     
+    public void isDead(boolean b) {
+        dead = b;
+    }
+    
     public float getX() {
         return x; 
     }
@@ -57,6 +62,11 @@ public class Player extends SpaceObject {
     
     @Override
     public void update(float dt) {
+        
+        if (dead) {
+            return;
+        }
+        
         if (left) {
             rad += rotationSpeed * dt;
         }

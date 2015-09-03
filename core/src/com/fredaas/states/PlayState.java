@@ -42,7 +42,7 @@ public class PlayState extends GameState {
         }
         
         /*
-         * Check for collision between player and asteroids.
+         * Check for collision between player and asteroids
          */
         for (int i = 0; i < asteroids.size(); i++) {
             Asteroid a = asteroids.get(i);
@@ -55,6 +55,17 @@ public class PlayState extends GameState {
                     i--;
                     break;
                 }
+            }
+        }
+        
+        /*
+         * Check for collision between player line map
+         */
+        float[] px = player.getPosX();
+        float[] py = player.getPosY();
+        for (int i = 0; i < px.length; i++) {
+            if (!map.contains(px[i], py[i])) {
+                player.isDead(true);
             }
         }
         

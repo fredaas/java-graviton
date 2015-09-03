@@ -5,16 +5,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.main.Game;
 
-public class LineMap {
+public class LineMap extends SpaceObject {
     
     private float centerX;
     private float centerY;
-    private float[] x;
-    private float[] y;
     private int numPoints;
-    private float radius;
-    private final float PI = 3.141592654f;
-    private float rad = PI / 2;
 
     public LineMap(int numPoints, float radius) {
         this.numPoints = numPoints;
@@ -22,11 +17,11 @@ public class LineMap {
         init(); 
     }
     
-    private void init() {
+    public void init() {
         centerX = Game.WIDTH / 2;
         centerY = Game.HEIGHT / 2;
-        x = new float[numPoints];
-        y = new float[numPoints];
+        posx = new float[numPoints];
+        posy = new float[numPoints];
         createMap();
     }
     
@@ -34,16 +29,20 @@ public class LineMap {
         float radOffset = 2 * PI / numPoints;
         
         for (int i = 0; i < numPoints; i++) {
-            x[i] = centerX + MathUtils.cos(rad) * radius;
-            y[i] = centerY + MathUtils.sin(rad) * radius;
+            posx[i] = centerX + MathUtils.cos(rad) * radius;
+            posy[i] = centerY + MathUtils.sin(rad) * radius;
             rad += radOffset;
         }
     }
+
+    @Override
+    public void update(float dt) {}
     
+    @Override
     public void draw(ShapeRenderer sr) {
         sr.begin(ShapeType.Line);
             for (int i = 0, j = numPoints - 1; i < numPoints; j = i++) {
-                sr.line(x[i], y[i], x[j], y[j]);
+                sr.line(posx[i], posy[i], posx[j], posy[j]);
             }
         sr.end();
     }
