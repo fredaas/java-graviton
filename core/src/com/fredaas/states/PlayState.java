@@ -41,9 +41,26 @@ public class PlayState extends GameState {
             asteroids.get(i).update(dt);
         }
         
+        /*
+         * Check for collision between player and asteroids.
+         */
+        for (int i = 0; i < asteroids.size(); i++) {
+            Asteroid a = asteroids.get(i);
+            float[] posx = a.getPosX();
+            float[] posy = a.getPosY();
+            int length = posx.length;
+            for (int j = 0; j < length; j++) {
+                if (player.contains(posx[j], posy[j])) {
+                    asteroids.remove(i);
+                    i--;
+                    break;
+                }
+            }
+        }
+        
         handleInput();
     }
-
+    
     @Override
     public void draw(ShapeRenderer sr) {
         sr.setProjectionMatrix(Game.cam.combined);
