@@ -1,8 +1,10 @@
 package com.fredaas.states;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.fredaas.entities.Asteroid;
+import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
 import com.fredaas.handlers.GameKeys;
 import com.fredaas.handlers.GameKeys.Key;
@@ -13,6 +15,7 @@ public class PlayState extends GameState {
     
     private Player player;
     private ArrayList<Asteroid> asteroids;
+    private LineMap map;
 
     public PlayState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -23,6 +26,7 @@ public class PlayState extends GameState {
     public void init() {
         player = new Player(Game.WIDTH / 2, Game.HEIGHT / 2);     
         asteroids = new ArrayList<Asteroid>();
+        map = new LineMap(12, 2000);
         createAsteroids(10);
     }
     
@@ -45,6 +49,7 @@ public class PlayState extends GameState {
         sr.setProjectionMatrix(Game.cam.combined);
         
         player.draw(sr);
+        map.draw(sr);
         
         for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).draw(sr);
