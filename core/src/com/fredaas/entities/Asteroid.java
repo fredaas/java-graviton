@@ -9,6 +9,9 @@ public class Asteroid extends SpaceObject {
     
     private float delta[];
     private float angleOffset;
+    private float angle;
+    private float xspeed;
+    private float yspeed;
     
     public Asteroid (float radius) {
         this.x = (float) Math.random() * Game.WIDTH;
@@ -25,8 +28,11 @@ public class Asteroid extends SpaceObject {
         posy = new float[numPoints];
         delta = new float[numPoints];
         rotationSpeed = MathUtils.random(-1, 1);
-        dx = MathUtils.random(-1, 1);
-        dy = MathUtils.random(-1, 1);
+        xspeed = MathUtils.random(-1, 1);
+        yspeed = MathUtils.random(-1, 1);
+        angle = MathUtils.random(0, 2 * PI);
+        dx = MathUtils.cos(angle) * xspeed;
+        dy = MathUtils.sin(angle) * yspeed;
         
         for (int i = 0; i < numPoints; i++) {
             delta[i] = MathUtils.random(radius / 2, radius);
