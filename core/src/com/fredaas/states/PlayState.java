@@ -75,6 +75,21 @@ public class PlayState extends GameState {
             }
         }
         
+        /*
+         * Check for collision between asteroid and map
+         */
+        for (int i = 0; i < asteroids.size(); i++) {
+            Asteroid a = asteroids.get(i);
+            for (int j = 0; j < a.numPoints(); j++) {
+                if (!map.contains(a.getPosX()[j], a.getPosY()[j])) {
+                    asteroids.remove(i);
+                    i--;
+                    break;
+                }
+            }
+        }
+        
+        
         handleInput();
     }
     
