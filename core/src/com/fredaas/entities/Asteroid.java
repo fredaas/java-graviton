@@ -25,6 +25,8 @@ public class Asteroid extends SpaceObject {
         posy = new float[numPoints];
         delta = new float[numPoints];
         rotationSpeed = MathUtils.random(-1, 1);
+        dx = MathUtils.random(-1, 1);
+        dy = MathUtils.random(-1, 1);
         
         for (int i = 0; i < numPoints; i++) {
             delta[i] = MathUtils.random(radius / 2, radius);
@@ -45,6 +47,8 @@ public class Asteroid extends SpaceObject {
     @Override
     public void update(float dt) {
         rad += rotationSpeed * dt;
+        x += dx;
+        y += dy;
         setOrientation();
     }
 
