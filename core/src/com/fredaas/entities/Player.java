@@ -14,7 +14,6 @@ public class Player extends SpaceObject {
     private boolean right = false;
     private boolean up = false;
     private boolean dead = false;
-    private int numPoints = 4;
     private Line2D.Float[] hitLines;
     private Point2D.Float[] hitPoints;
     
@@ -26,6 +25,7 @@ public class Player extends SpaceObject {
 
     @Override
     public void init() {
+        numPoints = 4;
         posx = new float[numPoints];
         posy = new float[numPoints];
         hitLines = new Line2D.Float[numPoints]; 

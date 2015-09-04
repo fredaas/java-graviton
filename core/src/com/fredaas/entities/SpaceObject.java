@@ -17,6 +17,7 @@ public abstract class SpaceObject {
     protected float dy = 0;
     protected final float PI = 3.141592654f;
     protected float rad = PI / 2;
+    protected int numPoints;
 
     public SpaceObject() {}
     

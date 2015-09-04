@@ -7,7 +7,6 @@ import com.fredaas.main.Game;
 
 public class Asteroid extends SpaceObject {
     
-    private int numPoints;
     private float delta[];
     private float angleOffset;
     
@@ -52,8 +51,7 @@ public class Asteroid extends SpaceObject {
     @Override
     public void draw(ShapeRenderer sr) {
         sr.begin(ShapeType.Line);
-            int length = posx.length;
-            for (int i = 0, j = length - 1; i < length; j = i++) {
+            for (int i = 0, j = numPoints - 1; i < numPoints; j = i++) {
                 sr.line(posx[i], posy[i], posx[j], posy[j]);
             }
         sr.end();

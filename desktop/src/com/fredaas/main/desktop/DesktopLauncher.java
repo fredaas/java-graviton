@@ -12,10 +12,10 @@ public class DesktopLauncher {
         final int DEVICE_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Graviton";
-        config.width = 800;
-        config.height = 600;
+        config.width = DEVICE_WIDTH;
+        config.height = DEVICE_HEIGHT;
         config.resizable = false;
-        config.fullscreen = false;
+        config.fullscreen = true;
         new LwjglApplication(new Game(), config);
     }
 

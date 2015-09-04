@@ -7,8 +7,6 @@ import com.fredaas.main.Game;
 
 public class LineMap extends SpaceObject {
     
-    private int numPoints;
-
     public LineMap(int numPoints, float radius) {
         this.numPoints = numPoints;
         this.radius = radius;
