@@ -1,5 +1,8 @@
 package com.fredaas.entities;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
@@ -11,6 +14,9 @@ public class Player extends SpaceObject {
     private boolean right = false;
     private boolean up = false;
     private boolean dead = false;
+    private int numPoints = 4;
+    private Line2D.Float[] hitLines;
+    private Point2D.Float[] hitPoints;
     
     public Player(float x, float y) {
         this.x = Game.WIDTH / 2;
@@ -20,8 +26,38 @@ public class Player extends SpaceObject {
 
     @Override
     public void init() {
-        posx = new float[4];
-        posy = new float[4];
+        posx = new float[numPoints];
+        posy = new float[numPoints];
+        hitLines = new Line2D.Float[numPoints]; 
+        hitPoints = new Point2D.Float[numPoints];
+        
+        for (int i = 0; i < numPoints; i++) {
+            hitPoints[i] = new Point2D.Float();
+            hitLines[i] = new Line2D.Float();
+        }
+    }
+    
+    public void calculateHitlines() {
+        if (dead) {
+            return;
+        }
+        
+        for (int i = 0, j = numPoints - 1; i < numPoints; j = i++) {
+            hitLines[i].setLine(posx[i], posy[i], posx[j], posy[j]);
+        }
+        
+        hitPoints[0].setLocation(
+                MathUtils.cos(rad - PI / 2),
+                MathUtils.sin(rad - PI / 2));
+        hitPoints[1].setLocation(
+                MathUtils.cos(rad + PI / 2),
+                MathUtils.sin(rad + PI / 2));
+        hitPoints[2].setLocation(
+                MathUtils.cos(rad + 5 * PI / 6),
+                MathUtils.sin(rad + 5 * PI / 6));
+        hitPoints[3].setLocation(
+                MathUtils.cos(rad - 5 * PI / 6),
+                MathUtils.sin(rad - 5 * PI / 6));
     }
     
     public void setOrientation() {
@@ -62,8 +98,14 @@ public class Player extends SpaceObject {
     
     @Override
     public void update(float dt) {
-        
         if (dead) {
+            for (int i = 0; i < numPoints; i++) {
+                hitLines[i].setLine(
+                        hitLines[i].x1 + hitPoints[i].x * 10 * dt,
+                        hitLines[i].y1 + hitPoints[i].y * 10 * dt, 
+                        hitLines[i].x2 + hitPoints[i].x * 10 * dt, 
+                        hitLines[i].y2 + hitPoints[i].y * 10 * dt);
+            }
             return;
         }
         
@@ -92,13 +134,25 @@ public class Player extends SpaceObject {
         y += dy * dt;
         
         setOrientation();
+        calculateHitlines();
     }
 
     @Override
     public void draw(ShapeRenderer sr) {
         sr.begin(ShapeType.Line);
-            int length = posx.length;
-            for (int i = 0, j = length - 1; i < length; j = i++) {
+            if (dead) {
+                for (int i = 0; i < numPoints; i++) {
+                    sr.line(
+                            hitLines[i].x1, 
+                            hitLines[i].y1, 
+                            hitLines[i].x2, 
+                            hitLines[i].y2);
+                }
+                sr.end();
+                return;
+            }
+        
+            for (int i = 0, j = numPoints - 1; i < numPoints; j = i++) {
                 sr.line(posx[i], posy[i], posx[j], posy[j]);
             }
         sr.end();
