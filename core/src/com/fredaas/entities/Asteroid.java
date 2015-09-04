@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.main.Game;
+import com.fredaas.states.PlayState;
 
 public class Asteroid extends SpaceObject {
     
@@ -21,7 +22,60 @@ public class Asteroid extends SpaceObject {
     
     public Asteroid (Type type) {
         this.type = type;
+        x = MathUtils.random(0, Game.WIDTH);
+        y = MathUtils.random(0, Game.HEIGHT);
+        
+        /*
+         * Initial projection angle
+         */
+        xspeed = MathUtils.random(-1, 1);
+        yspeed = MathUtils.random(-1, 1);
+        angle = MathUtils.random(0, 2 * PI);
+        dx = MathUtils.cos(angle) * xspeed;
+        dy = MathUtils.sin(angle) * yspeed;
+        
         init();
+    }
+    
+    public Asteroid (float x, float y, float delta, Type type) {
+        this.x = x;
+        this.y = y;
+        
+        /*
+         * When an asteroid collides with the map it gets
+         * split into two smaller asteroids. The angle of
+         * projection is an offset range from the center
+         * of the map.
+         */
+        float mapCenterX = PlayState.map.getX();
+        float mapCenterY = PlayState.map.getY();
+        angle = MathUtils.atan2(y - mapCenterY, x - mapCenterX) + PI;
+        xspeed = 1;
+        yspeed = 1;
+        float angleOffset = angle + delta * PI / 6;
+        dx = MathUtils.cos(angleOffset) * xspeed;
+        dy = MathUtils.sin(angleOffset) * yspeed;
+        
+        switch (type) {
+            case LARGE:
+                this.type = Type.MEDIUM;
+                break;
+            case MEDIUM:
+                this.type = Type.SMALL;
+                break;
+            case SMALL:
+                this.type = type;
+        }
+        
+        init();
+    }
+    
+    public Type getType() {
+        return type;
+    }
+    
+    public float getAngle() {
+        return angle;
     }
 
     @Override
@@ -38,23 +92,12 @@ public class Asteroid extends SpaceObject {
                 break;
         }
         
-        x = MathUtils.random(0, Game.WIDTH);
-        y = MathUtils.random(0, Game.HEIGHT);
         numPoints = 12;
         angleOffset = (2 * PI) / numPoints;
         posx = new float[numPoints];
         posy = new float[numPoints];
         delta = new float[numPoints];
         rotationSpeed = MathUtils.random(-1, 1);
-        
-        /*
-         * Initial projection angle
-         */
-        xspeed = MathUtils.random(-1, 1);
-        yspeed = MathUtils.random(-1, 1);
-        angle = MathUtils.random(0, 2 * PI);
-        dx = MathUtils.cos(angle) * xspeed;
-        dy = MathUtils.sin(angle) * yspeed;
         
         for (int i = 0; i < numPoints; i++) {
             delta[i] = MathUtils.random(radius / 2, radius);

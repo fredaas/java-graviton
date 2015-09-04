@@ -19,7 +19,7 @@ public class PlayState extends GameState {
     private Player player;
     private ArrayList<Asteroid> asteroids;
     private ArrayList<Star> stars;
-    private LineMap map;
+    public static LineMap map;
 
     public PlayState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -54,8 +54,7 @@ public class PlayState extends GameState {
             Asteroid a = asteroids.get(i);
             float[] posx = a.getPosX();
             float[] posy = a.getPosY();
-            int length = posx.length;
-            for (int j = 0; j < length; j++) {
+            for (int j = 0; j < a.numPoints(); j++) {
                 if (player.contains(posx[j], posy[j])) {
                     asteroids.remove(i);
                     i--;
@@ -69,7 +68,7 @@ public class PlayState extends GameState {
          */
         float[] px = player.getPosX();
         float[] py = player.getPosY();
-        for (int i = 0; i < px.length; i++) {
+        for (int i = 0; i < player.numPoints(); i++) {
             if (!map.contains(px[i], py[i])) {
                 player.isDead(true);
             }
@@ -82,13 +81,22 @@ public class PlayState extends GameState {
             Asteroid a = asteroids.get(i);
             for (int j = 0; j < a.numPoints(); j++) {
                 if (!map.contains(a.getPosX()[j], a.getPosY()[j])) {
+                    if (a.getType() != Type.SMALL) {
+                        float delta = 1;
+                        for (int k = 0; k < 2; k++) {
+                            asteroids.add(new Asteroid(
+                                    a.getX(),
+                                    a.getY(),
+                                    delta *= -1,
+                                    a.getType()));
+                        }
+                    }
                     asteroids.remove(i);
                     i--;
                     break;
                 }
             }
         }
-        
         
         handleInput();
     }
