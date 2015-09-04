@@ -6,7 +6,8 @@ public class GameKeys {
         LEFT(0),
         RIGHT(1),
         DOWN(2),
-        UP(3);
+        UP(3),
+        F(4);
 
         int value;
 

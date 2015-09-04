@@ -22,6 +22,9 @@ public class KeyInputProcessor extends InputAdapter {
         if (keyCode == Keys.DOWN) {
             GameKeys.setKey(Key.DOWN, true);
         }
+        if (keyCode == Keys.F) {
+            GameKeys.setKey(Key.F, true);
+        }
 
         return true;
     }
@@ -39,6 +42,9 @@ public class KeyInputProcessor extends InputAdapter {
         }
         if (keyCode == Keys.DOWN) {
             GameKeys.setKey(Key.DOWN, false);
+        }
+        if (keyCode == Keys.F) {
+            GameKeys.setKey(Key.F, false);
         }
 
         return true;

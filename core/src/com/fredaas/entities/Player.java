@@ -2,6 +2,7 @@ package com.fredaas.entities;
 
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -14,8 +15,13 @@ public class Player extends SpaceObject {
     private boolean right = false;
     private boolean up = false;
     private boolean dead = false;
+    private boolean fire = false;
     private Line2D.Float[] hitLines;
     private Point2D.Float[] hitPoints;
+    private ArrayList<Bullet> bullets;
+    private float timerStart;
+    private float timerDelay;
+    private float timerDiff;
     
     public Player(float x, float y) {
         this.x = Game.WIDTH / 2;
@@ -25,6 +31,9 @@ public class Player extends SpaceObject {
 
     @Override
     public void init() {
+        bullets = new ArrayList<Bullet>();
+        timerStart = System.nanoTime();
+        timerDelay = 100;
         numPoints = 4;
         posx = new float[numPoints];
         posy = new float[numPoints];
@@ -84,6 +93,10 @@ public class Player extends SpaceObject {
         up = b;
     }
     
+    public void setFire(boolean b) {
+        fire = b;
+    }
+    
     public void isDead(boolean b) {
         dead = b;
     }
@@ -98,6 +111,9 @@ public class Player extends SpaceObject {
     
     @Override
     public void update(float dt) {
+        /*
+         * Break player into vector lines if dead
+         */
         if (dead) {
             for (int i = 0; i < numPoints; i++) {
                 hitLines[i].setLine(
@@ -109,6 +125,28 @@ public class Player extends SpaceObject {
             return;
         }
         
+        /*
+         * Fire bullets
+         */
+        if (fire) {
+            timerDiff = (System.nanoTime() - timerStart) / 1000000;
+        }
+        if (timerDiff > timerDelay) {
+            bullets.add(new Bullet(x, y, rad));
+            timerDiff = 0;
+            timerStart = System.nanoTime();
+        }
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).update(dt);
+            if (bullets.get(i).remove()) {
+                bullets.remove(i);
+                i--;
+            }
+        }
+        
+        /*
+         * Update position
+         */
         if (left) {
             rad += rotationSpeed * dt;
         }
@@ -156,6 +194,10 @@ public class Player extends SpaceObject {
                 sr.line(posx[i], posy[i], posx[j], posy[j]);
             }
         sr.end();
+        
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).draw(sr);
+        }
     }
     
 }
