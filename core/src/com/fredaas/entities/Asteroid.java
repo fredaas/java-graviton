@@ -12,22 +12,44 @@ public class Asteroid extends SpaceObject {
     private float angle;
     private float xspeed;
     private float yspeed;
+    private Type type;
+    public static enum Type {
+        SMALL,
+        MEDIUM,
+        LARGE;
+    }
     
-    public Asteroid (float radius) {
-        this.x = (float) Math.random() * Game.WIDTH;
-        this.y = (float) Math.random() * Game.HEIGHT;
-        this.radius = radius;
+    public Asteroid (Type type) {
+        this.type = type;
         init();
     }
 
     @Override
     public void init() {
+        switch (type) {
+            case SMALL:
+                radius = 10;
+                break;
+            case MEDIUM:
+                radius = 15;
+                break;
+            case LARGE:
+                radius = 25;
+                break;
+        }
+        
+        x = MathUtils.random(0, Game.WIDTH);
+        y = MathUtils.random(0, Game.HEIGHT);
         numPoints = 12;
         angleOffset = (2 * PI) / numPoints;
         posx = new float[numPoints];
         posy = new float[numPoints];
         delta = new float[numPoints];
         rotationSpeed = MathUtils.random(-1, 1);
+        
+        /*
+         * Initial projection angle
+         */
         xspeed = MathUtils.random(-1, 1);
         yspeed = MathUtils.random(-1, 1);
         angle = MathUtils.random(0, 2 * PI);

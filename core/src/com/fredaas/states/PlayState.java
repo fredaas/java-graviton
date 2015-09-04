@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.entities.Asteroid;
+import com.fredaas.entities.Asteroid.Type;
 import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
 import com.fredaas.entities.Star;
@@ -95,7 +96,7 @@ public class PlayState extends GameState {
     
     private void createAsteroids(int num) {
         for (int i = 0; i < num; i++) {
-            asteroids.add(new Asteroid(20));
+            asteroids.add(new Asteroid(Type.LARGE));
         }
     }
     
