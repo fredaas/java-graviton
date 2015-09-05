@@ -8,7 +8,9 @@ import com.fredaas.entities.Asteroid;
 import com.fredaas.entities.Asteroid.Type;
 import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
+import com.fredaas.entities.StandardTracker;
 import com.fredaas.entities.Star;
+import com.fredaas.entities.Tracker;
 import com.fredaas.handlers.GameKeys;
 import com.fredaas.handlers.GameKeys.Key;
 import com.fredaas.handlers.GameStateManager;
@@ -16,10 +18,11 @@ import com.fredaas.main.Game;
 
 public class PlayState extends GameState {
     
-    private Player player;
-    private ArrayList<Asteroid> asteroids;
-    private ArrayList<Star> stars;
+    public static Player player;
+    public static ArrayList<Asteroid> asteroids;
+    public static ArrayList<Star> stars;
     public static LineMap map;
+    public static ArrayList<Tracker> trackers;
 
     public PlayState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -30,10 +33,12 @@ public class PlayState extends GameState {
     public void init() {
         player = new Player(Game.WIDTH / 2, Game.HEIGHT / 2);     
         asteroids = new ArrayList<Asteroid>();
+        trackers = new ArrayList<Tracker>();
         stars = new ArrayList<Star>();
         map = new LineMap(12, 2000);
         createAsteroids(10);
         createStars(500);
+        createTrackers(20);
     }
     
     @Override
@@ -45,6 +50,10 @@ public class PlayState extends GameState {
         
         for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).update(dt);
+        }
+        
+        for (int i = 0; i < trackers.size(); i++) {
+            trackers.get(i).update(dt);
         }
         
         /*
@@ -112,6 +121,10 @@ public class PlayState extends GameState {
             asteroids.get(i).draw(sr);
         }
         
+        for (int i = 0; i < trackers.size(); i++) {
+            trackers.get(i).draw(sr);
+        }
+        
         for (int i = 0; i < stars.size(); i++) {
             stars.get(i).draw(sr);
         }
@@ -120,6 +133,14 @@ public class PlayState extends GameState {
     private void createAsteroids(int num) {
         for (int i = 0; i < num; i++) {
             asteroids.add(new Asteroid(Type.LARGE));
+        }
+    }
+    
+    private void createTrackers(int num) {    
+        for (int i = 0; i < num; i++) {
+            float x = MathUtils.random(0, Game.WIDTH);
+            float y = MathUtils.random(0, Game.HEIGHT);
+            trackers.add(new StandardTracker(x, y));
         }
     }
     
