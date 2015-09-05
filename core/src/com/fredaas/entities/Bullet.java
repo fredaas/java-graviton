@@ -23,8 +23,8 @@ public class Bullet extends SpaceObject {
         ttl = 500;
         timerStart = System.nanoTime();
         radius = 2;
-        dx = MathUtils.cos(angle) * 400;
-        dy = MathUtils.sin(angle) * 400;
+        dx = MathUtils.cos(angle) * 800;
+        dy = MathUtils.sin(angle) * 800;
     }
     
     public boolean remove() {
