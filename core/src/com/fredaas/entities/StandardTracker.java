@@ -3,7 +3,6 @@ package com.fredaas.entities;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
-import com.fredaas.main.Game;
 import com.fredaas.states.PlayState;
 
 public class StandardTracker extends Tracker {
@@ -70,7 +69,9 @@ public class StandardTracker extends Tracker {
 
     @Override
     public void draw(ShapeRenderer sr) {
+        
         sr.begin(ShapeType.Line);
+        sr.setColor(0, 1, 0, 1);
             for (int i = 0, j = numPoints - 1; i < numPoints; j = i++) {
                 sr.line(posx[i], posy[i], posx[j], posy[j]);
             }

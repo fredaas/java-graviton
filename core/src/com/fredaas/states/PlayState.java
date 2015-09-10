@@ -1,7 +1,6 @@
 package com.fredaas.states;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.entities.Asteroid;
