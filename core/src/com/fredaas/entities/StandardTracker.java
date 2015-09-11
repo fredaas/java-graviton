@@ -7,9 +7,6 @@ import com.fredaas.states.PlayState;
 
 public class StandardTracker extends Tracker {
     
-    private float radOffset;
-    private float distance;
-    
     public StandardTracker(float x, float y) {
         this.x = x;
         this.y = y;

@@ -18,6 +18,8 @@ public abstract class Tracker {
     protected float radius;
     protected float posx[];
     protected float posy[];
+    protected float radOffset;
+    protected float distance;
     
     public Tracker() {}
     
