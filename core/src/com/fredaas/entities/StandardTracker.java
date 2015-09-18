@@ -1,14 +1,13 @@
 package com.fredaas.entities;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.states.PlayState;
 
 public class StandardTracker extends SpaceObject {
-    
-    private float tx;
-    private float ty;
     
     public StandardTracker(float x, float y) {
         this.x = x;
@@ -20,7 +19,7 @@ public class StandardTracker extends SpaceObject {
     public void init() {
         xSpeed = MathUtils.random(0.5f, 1);
         ySpeed = MathUtils.random(0.5f, 1);
-        radius = 20;
+        radius = 10;
         numPoints = 3;
         radOffset = 2 * PI / numPoints;
         posx = new float[numPoints];
@@ -34,37 +33,35 @@ public class StandardTracker extends SpaceObject {
     }
     
     private void setDirection() {
-        float delta = PlayState.map.getRadius();
-        float fieldStrength = 20;
-        float direction = -1;
-        
-        dx = x - PlayState.player.getX();
-        dy = y - PlayState.player.getY();
-        rad = MathUtils.atan2(dy, dx);
-        
-        if (rad < PI) {
-            rad += PI;
-        }
-        
-        distance = (float) Math.sqrt(dx * dx + dy * dy);
-        dx = MathUtils.cos(rad) * distance * xSpeed;
-        dy = MathUtils.sin(rad) * distance * ySpeed;
-        tx = MathUtils.cos(rad) * (delta / distance) * fieldStrength * direction;
-        ty = MathUtils.sin(rad) * (delta / distance) * fieldStrength * direction;
-        
         for (int i = 0; i < numPoints; i++) {
             posx[i] = x + MathUtils.cos(rad) * radius;
             posy[i] = y + MathUtils.sin(rad) * radius;
             rad += radOffset;
         }
     }
-
+    
+    private void follow(float x, float y) {
+        setAngle(x, y);
+        
+        dx = MathUtils.cos(rad) * (distance + 50) * xSpeed;
+        dy = MathUtils.sin(rad) * (distance + 50) * ySpeed;
+    }
+    
     @Override
     public void update(float dt) {
-        x += (dx + tx) * dt;
-        y += (dy + ty) * dt;
+        Player player = PlayState.player;
+        ArrayList<Asteroid> asteroids = PlayState.asteroids;
         
+        for (int i = 0; i < asteroids.size(); i++) {
+            Asteroid a = asteroids.get(i);
+            setGravity(a.getX(), a.getY(), 5, Force.REPEL, dt);
+        }
+        
+        follow(player.getX(), player.getY());
         setDirection();
+        
+        x += dx * dt;
+        y += dy * dt;
     }
 
     @Override

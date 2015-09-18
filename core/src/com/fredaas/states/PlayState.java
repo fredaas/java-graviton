@@ -36,7 +36,7 @@ public class PlayState extends GameState {
         map = new LineMap(12, 2000);
         createAsteroids(10);
         createStars(500);
-        createTrackers(20);
+        createTrackers(40);
     }
     
     @Override

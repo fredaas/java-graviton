@@ -1,6 +1,8 @@
 package com.fredaas.entities;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import com.fredaas.states.PlayState;
 
 public abstract class SpaceObject {
 
@@ -15,6 +17,8 @@ public abstract class SpaceObject {
     protected float maxSpeed = 300;
     protected float dx = 0;
     protected float dy = 0;
+    protected float tx = 0;
+    protected float ty = 0;
     protected final float PI = 3.141592654f;
     protected float rad = PI / 2;
     protected int numPoints;
@@ -22,7 +26,11 @@ public abstract class SpaceObject {
     protected float ySpeed;
     protected float radOffset;
     protected float distance;
-
+    public static enum Force {
+        REPEL,
+        ATRACT;
+    }
+    
     public SpaceObject() {}
     
     /*
@@ -41,6 +49,47 @@ public abstract class SpaceObject {
         }
         
         return hit;
+    }
+    
+    protected void setGravity(float x, float y, float strength, Force force, float dt) {
+        setAngle(x, y);
+        
+        switch (force) {
+            case REPEL:
+                setForce(-1, strength);
+                break;
+            case ATRACT:
+                setForce(1, strength);
+                break;
+        }
+        
+        this.x += tx * dt;
+        this.y += ty * dt;
+        
+        dx = 0;
+        dy = 0;
+        tx = 0;
+        ty = 0; 
+    }
+    
+    protected void setAngle(float x, float y) {
+        float deltaX = this.x - x;
+        float deltaY = this.y - y;
+        
+        rad = MathUtils.atan2(deltaY, deltaX);
+        
+        if (rad < PI) {
+            rad += PI;
+        }
+        
+        distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+    
+    private void setForce(float direction, float strength) {
+        float delta = PlayState.map.getRadius();
+        
+        tx = MathUtils.cos(rad) * (delta / distance) * direction * strength;
+        ty = MathUtils.sin(rad) * (delta / distance) * direction * strength;
     }
     
     public float[] getPosX() {
