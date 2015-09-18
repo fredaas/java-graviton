@@ -9,7 +9,6 @@ import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
 import com.fredaas.entities.StandardTracker;
 import com.fredaas.entities.Star;
-import com.fredaas.entities.Tracker;
 import com.fredaas.handlers.GameKeys;
 import com.fredaas.handlers.GameKeys.Key;
 import com.fredaas.handlers.GameStateManager;
@@ -21,7 +20,7 @@ public class PlayState extends GameState {
     public static ArrayList<Asteroid> asteroids;
     public static ArrayList<Star> stars;
     public static LineMap map;
-    public static ArrayList<Tracker> trackers;
+    public static ArrayList<StandardTracker> trackers;
 
     public PlayState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -32,7 +31,7 @@ public class PlayState extends GameState {
     public void init() {
         player = new Player(Game.WIDTH / 2, Game.HEIGHT / 2);     
         asteroids = new ArrayList<Asteroid>();
-        trackers = new ArrayList<Tracker>();
+        trackers = new ArrayList<StandardTracker>();
         stars = new ArrayList<Star>();
         map = new LineMap(12, 2000);
         createAsteroids(10);

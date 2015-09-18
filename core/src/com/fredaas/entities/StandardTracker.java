@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.states.PlayState;
 
-public class StandardTracker extends Tracker {
+public class StandardTracker extends SpaceObject {
+    
+    private float tx;
+    private float ty;
     
     public StandardTracker(float x, float y) {
         this.x = x;

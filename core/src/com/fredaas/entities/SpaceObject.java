@@ -18,6 +18,10 @@ public abstract class SpaceObject {
     protected final float PI = 3.141592654f;
     protected float rad = PI / 2;
     protected int numPoints;
+    protected float xSpeed;
+    protected float ySpeed;
+    protected float radOffset;
+    protected float distance;
 
     public SpaceObject() {}
     
