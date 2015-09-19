@@ -28,7 +28,7 @@ public abstract class SpaceObject {
     protected float distance;
     public static enum Force {
         REPEL,
-        ATRACT;
+        ATTRACT;
     }
     
     public SpaceObject() {}
@@ -58,7 +58,7 @@ public abstract class SpaceObject {
             case REPEL:
                 setForce(-1, strength);
                 break;
-            case ATRACT:
+            case ATTRACT:
                 setForce(1, strength);
                 break;
         }
