@@ -9,6 +9,8 @@ import com.fredaas.states.PlayState;
 
 public class StandardTracker extends SpaceObject {
     
+    private double id;
+    
     public StandardTracker(float x, float y) {
         this.x = x;
         this.y = y;
@@ -17,6 +19,7 @@ public class StandardTracker extends SpaceObject {
     
     @Override
     public void init() {
+        id = System.nanoTime();
         xSpeed = MathUtils.random(0.5f, 1);
         ySpeed = MathUtils.random(0.5f, 1);
         radius = 10;
@@ -51,10 +54,18 @@ public class StandardTracker extends SpaceObject {
     public void update(float dt) {
         Player player = PlayState.player;
         ArrayList<Asteroid> asteroids = PlayState.asteroids;
+        ArrayList<StandardTracker> enemies = PlayState.trackers;
         
         for (int i = 0; i < asteroids.size(); i++) {
             Asteroid a = asteroids.get(i);
             setGravity(a.getX(), a.getY(), 5, Force.REPEL, dt);
+        }
+        
+        for (int i = 0; i < enemies.size(); i++) {
+            StandardTracker t = enemies.get(i);
+            if (t.id != this.id) {
+                setGravity(t.getX(), t.getY(), 0.25f, Force.REPEL, dt);
+            }
         }
         
         follow(player.getX(), player.getY());
