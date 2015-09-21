@@ -10,6 +10,7 @@ import com.fredaas.states.PlayState;
 public class StandardTracker extends SpaceObject {
     
     private double id;
+    private float dist[];
     
     public StandardTracker(float x, float y) {
         this.x = x;
@@ -23,12 +24,16 @@ public class StandardTracker extends SpaceObject {
         xSpeed = MathUtils.random(0.5f, 1);
         ySpeed = MathUtils.random(0.5f, 1);
         radius = 10;
-        numPoints = 3;
+        dist = new float[2];
+        dist[0] = radius;
+        dist[1] = radius / 2;
+        numPoints = 12;
         radOffset = 2 * PI / numPoints;
         posx = new float[numPoints];
         posy = new float[numPoints];
         
         for (int i = 0; i < numPoints; i++) {
+            radius = i % 2 != 0 ? dist[0] : dist[1];
             posx[i] = x + MathUtils.cos(rad) * radius;
             posy[i] = y + MathUtils.sin(rad) * radius;
             rad += radOffset;
@@ -37,6 +42,7 @@ public class StandardTracker extends SpaceObject {
     
     private void setDirection() {
         for (int i = 0; i < numPoints; i++) {
+            radius = i % 2 != 0 ? dist[0] : dist[1];
             posx[i] = x + MathUtils.cos(rad) * radius;
             posy[i] = y + MathUtils.sin(rad) * radius;
             rad += radOffset;
