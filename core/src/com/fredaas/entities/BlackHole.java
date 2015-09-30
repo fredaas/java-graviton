@@ -14,6 +14,7 @@ public class BlackHole extends SpaceObject {
 
     @Override
     public void init() {
+        rotationSpeed = 1;
         radius = 150;
         numPoints = 8;
         radOffset = 2 * PI / numPoints;
@@ -24,7 +25,11 @@ public class BlackHole extends SpaceObject {
         distance = MathUtils.random(map.getRadius() / 1.5f, map.getRadius() / 1.2f);
         x = map.getX() + MathUtils.cos(angle) * distance;
         y = map.getY() + MathUtils.sin(angle) * distance;
-        
+         
+        setOrientation();
+    }
+    
+    private void setOrientation() {
         for (int i = 0; i < numPoints; i++) {
             posx[i] = x + MathUtils.cos(rad) * radius;
             posy[i] = y + MathUtils.sin(rad) * radius;
@@ -34,6 +39,8 @@ public class BlackHole extends SpaceObject {
 
     @Override
     public void update(float dt) {
+        rad += rotationSpeed * dt;
+        setOrientation();
     }
 
     @Override
