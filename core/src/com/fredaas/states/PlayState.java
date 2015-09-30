@@ -1,10 +1,12 @@
 package com.fredaas.states;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.entities.Asteroid;
 import com.fredaas.entities.Asteroid.Type;
+import com.fredaas.entities.BlackHole;
 import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
 import com.fredaas.entities.StandardTracker;
@@ -21,6 +23,7 @@ public class PlayState extends GameState {
     public static ArrayList<Star> stars;
     public static LineMap map;
     public static ArrayList<StandardTracker> trackers;
+    public static ArrayList<BlackHole> blackHoles;
 
     public PlayState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -32,11 +35,13 @@ public class PlayState extends GameState {
         player = new Player(Game.WIDTH / 2, Game.HEIGHT / 2);     
         asteroids = new ArrayList<Asteroid>();
         trackers = new ArrayList<StandardTracker>();
+        blackHoles = new ArrayList<BlackHole>();
         stars = new ArrayList<Star>();
         map = new LineMap(12, 2000);
         createAsteroids(10);
         createStars(500);
         createTrackers(50);
+        createBlackHoles(4);
     }
     
     @Override
@@ -52,6 +57,10 @@ public class PlayState extends GameState {
         
         for (int i = 0; i < trackers.size(); i++) {
             trackers.get(i).update(dt);
+        }
+        
+        for (int i = 0; i < blackHoles.size(); i++) {
+            blackHoles.get(i).update(dt);
         }
         
         /*
@@ -115,6 +124,10 @@ public class PlayState extends GameState {
         player.draw(sr);
         map.draw(sr);
         
+        for (int i = 0; i < blackHoles.size(); i++) {
+            blackHoles.get(i).draw(sr);
+        }
+        
         for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).draw(sr);
         }
@@ -125,6 +138,12 @@ public class PlayState extends GameState {
         
         for (int i = 0; i < stars.size(); i++) {
             stars.get(i).draw(sr);
+        }
+    }
+    
+    private void createBlackHoles(int num) {
+        for (int i = 0; i < num; i++) {
+            blackHoles.add(new BlackHole());
         }
     }
     
