@@ -3,7 +3,6 @@ package com.fredaas.entities;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
-import com.fredaas.main.Game;
 import com.fredaas.states.PlayState;
 
 public class BlackHole extends SpaceObject {
