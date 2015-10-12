@@ -84,12 +84,13 @@ public class StandardTracker extends SpaceObject {
     @Override
     public void draw(ShapeRenderer sr) {
         
-        sr.begin(ShapeType.Line);
         sr.setColor(0, 1, 0, 1);
+        sr.begin(ShapeType.Line);
             for (int i = 0, j = numPoints - 1; i < numPoints; j = i++) {
                 sr.line(posx[i], posy[i], posx[j], posy[j]);
             }
         sr.end();
+        resetColor(sr);
     }
     
 }

@@ -116,6 +116,10 @@ public abstract class SpaceObject {
         return numPoints;
     }
     
+    public void resetColor(ShapeRenderer sr) {
+        sr.setColor(1, 1, 1, 1);
+    }
+    
     public abstract void init();
     public abstract void update(float dt);
     public abstract void draw(ShapeRenderer sr);
