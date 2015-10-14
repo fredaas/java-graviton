@@ -18,9 +18,13 @@ public class Player extends SpaceObject {
     private Line2D.Float[] hitLines;
     private Point2D.Float[] hitPoints;
     private ArrayList<Bullet> bullets;
-    private float timerStart;
-    private float timerDelay;
-    private float timerDiff;
+    private float shootingTimer;
+    private float shootingTimerDelay;
+    private float shootingTimerDiff;
+    private long thrustTimer;
+    private long thrustTimerDiff;
+    private long thrustTimerDelay;
+    private ArrayList<Thrust> thrust;
     
     public Player(float x, float y) {
         this.x = Game.WIDTH / 2;
@@ -30,9 +34,11 @@ public class Player extends SpaceObject {
 
     @Override
     public void init() {
+        thrust = new ArrayList<Thrust>();
         bullets = new ArrayList<Bullet>();
-        timerStart = System.nanoTime();
-        timerDelay = 100;
+        shootingTimer = System.nanoTime();
+        shootingTimerDelay = 100;
+        thrustTimerDelay = 10;
         numPoints = 4;
         posx = new float[numPoints];
         posy = new float[numPoints];
@@ -110,6 +116,21 @@ public class Player extends SpaceObject {
     
     @Override
     public void update(float dt) {
+        if (rad < 0) {
+            rad += 2 * PI;
+        }
+        
+        /*
+         * Update thrust particles
+         */
+        for (int i = 0; i < thrust.size(); i++) {
+            Thrust t = thrust.get(i);
+            t.update(dt);
+            if (t.ready()) {
+                thrust.remove(i);
+            }
+        }
+         
         /*
          * Break player into vector lines if dead
          */
@@ -128,12 +149,12 @@ public class Player extends SpaceObject {
          * Fire bullets
          */
         if (fire) {
-            timerDiff = (System.nanoTime() - timerStart) / 1000000;
+            shootingTimerDiff = (System.nanoTime() - shootingTimer) / 1000000;
         }
-        if (timerDiff > timerDelay) {
+        if (shootingTimerDiff > shootingTimerDelay) {
             bullets.add(new Bullet(x, y, rad));
-            timerDiff = 0;
-            timerStart = System.nanoTime();
+            shootingTimerDiff = 0;
+            shootingTimer = System.nanoTime();
         }
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update(dt);
@@ -155,6 +176,13 @@ public class Player extends SpaceObject {
         if(up) {
             dx += MathUtils.cos(rad) * accelerationSpeed * dt;
             dy += MathUtils.sin(rad) * accelerationSpeed * dt;
+            thrustTimerDiff = (System.nanoTime() - thrustTimer) / 1000000;
+            
+            if (thrustTimerDiff > thrustTimerDelay) {
+                thrust.add(new Thrust(x, y, rad));
+                thrustTimerDiff = 0;
+                thrustTimer = System.nanoTime();
+            }
         }
         
         float speed = (float) Math.sqrt(dx * dx + dy * dy);
@@ -196,6 +224,10 @@ public class Player extends SpaceObject {
         
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).draw(sr);
+        }
+        
+        for (int i = 0; i < thrust.size(); i++) {
+            thrust.get(i).draw(sr);
         }
     }
     
