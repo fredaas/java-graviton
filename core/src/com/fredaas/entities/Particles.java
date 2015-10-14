@@ -17,6 +17,8 @@ public class Particles extends SpaceObject {
         this.distance = r * 1.3f;
         this.tx = x;
         this.ty = y;
+        this.x = tx + MathUtils.cos(rad) * distance;
+        this.y = ty + MathUtils.sin(rad) * distance;
     }
 
     @Override

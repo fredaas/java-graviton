@@ -25,8 +25,8 @@ public class BlackHole extends SpaceObject {
         radOffset = 2 * PI / numPoints;
         posx = new float[numPoints];
         posy = new float[numPoints];
-        LineMap map = PlayState.map;
         float angle = MathUtils.random(0, 2 * PI);
+        LineMap map = PlayState.map;
         distance = MathUtils.random(map.getRadius() / 1.5f, map.getRadius() / 1.2f);
         x = map.getX() + MathUtils.cos(angle) * distance;
         y = map.getY() + MathUtils.sin(angle) * distance;
