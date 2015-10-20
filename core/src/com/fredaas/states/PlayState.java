@@ -1,16 +1,17 @@
 package com.fredaas.states;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.entities.Asteroid;
 import com.fredaas.entities.Asteroid.Type;
 import com.fredaas.entities.BlackHole;
+import com.fredaas.entities.Points;
 import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
 import com.fredaas.entities.StandardTracker;
 import com.fredaas.entities.Star;
+import com.fredaas.handlers.Font;
 import com.fredaas.handlers.GameKeys;
 import com.fredaas.handlers.GameKeys.Key;
 import com.fredaas.handlers.GameStateManager;
@@ -24,6 +25,7 @@ public class PlayState extends GameState {
     public static LineMap map;
     public static ArrayList<StandardTracker> trackers;
     public static ArrayList<BlackHole> blackHoles;
+    public static ArrayList<Points> points;
 
     public PlayState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -32,12 +34,14 @@ public class PlayState extends GameState {
     
     @Override
     public void init() {
+        Font.init(); // This should be done some other place
         player = new Player(Game.WIDTH / 2, Game.HEIGHT / 2);     
         asteroids = new ArrayList<Asteroid>();
         trackers = new ArrayList<StandardTracker>();
         blackHoles = new ArrayList<BlackHole>();
         stars = new ArrayList<Star>();
         map = new LineMap(12, 2000);
+        points = new ArrayList<Points>();
         createAsteroids(10);
         createStars(500);
         createTrackers(50);
@@ -50,6 +54,15 @@ public class PlayState extends GameState {
         Game.cam.update();
         
         player.update(dt);
+        
+        for (int i = 0; i < points.size(); i++) {
+            Points current = points.get(i);
+            current.update(dt);
+            if (current.ready()) {
+                points.remove(i);
+                i--;
+            }
+        }
         
         for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).update(dt);
@@ -123,6 +136,10 @@ public class PlayState extends GameState {
         
         player.draw(sr);
         map.draw(sr);
+        
+        for (int i = 0; i < points.size(); i++) {
+            points.get(i).draw(sr);
+        }
         
         for (int i = 0; i < blackHoles.size(); i++) {
             blackHoles.get(i).draw(sr);
