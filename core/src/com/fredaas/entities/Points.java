@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.fredaas.handlers.Font;
+import com.fredaas.main.Game;
 
 public class Points {
     
@@ -44,6 +45,7 @@ public class Points {
     }
     
     public void draw(ShapeRenderer sr) {
+        sb.setProjectionMatrix(Game.cam.combined);
         sb.begin();
         text.setText(bmf, score);
         bmf.setColor(1, 1, 1, alpha);

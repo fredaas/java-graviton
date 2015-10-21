@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.entities.Asteroid;
 import com.fredaas.entities.Asteroid.Type;
 import com.fredaas.entities.BlackHole;
-import com.fredaas.entities.Points;
 import com.fredaas.entities.LineMap;
 import com.fredaas.entities.Player;
+import com.fredaas.entities.Points;
 import com.fredaas.entities.StandardTracker;
 import com.fredaas.entities.Star;
 import com.fredaas.handlers.Font;
@@ -132,8 +132,6 @@ public class PlayState extends GameState {
     
     @Override
     public void draw(ShapeRenderer sr) {
-        sr.setProjectionMatrix(Game.cam.combined);
-        
         player.draw(sr);
         map.draw(sr);
         
@@ -156,6 +154,8 @@ public class PlayState extends GameState {
         for (int i = 0; i < stars.size(); i++) {
             stars.get(i).draw(sr);
         }
+        
+        sr.setProjectionMatrix(Game.cam.combined);
     }
     
     private void createBlackHoles(int num) {
