@@ -61,17 +61,32 @@ public class StandardTracker extends SpaceObject {
         Player player = PlayState.player;
         ArrayList<Asteroid> asteroids = PlayState.asteroids;
         ArrayList<StandardTracker> enemies = PlayState.trackers;
+        ArrayList<BlackHole> blackHoles = PlayState.blackHoles;
         
+        /*
+         * Set anti-gravity on asteroids
+         */
         for (int i = 0; i < asteroids.size(); i++) {
             Asteroid a = asteroids.get(i);
             setGravity(a.getX(), a.getY(), 5, Force.REPEL, dt);
         }
         
+        /*
+         * Set anti-gravity on other trackers
+         */
         for (int i = 0; i < enemies.size(); i++) {
             StandardTracker t = enemies.get(i);
             if (t.id != this.id) {
                 setGravity(t.getX(), t.getY(), 0.25f, Force.REPEL, dt);
             }
+        }
+        
+        /*
+         * Set gravity on black holes
+         */
+        for (int i = 0; i < blackHoles.size(); i++) {
+            BlackHole b = blackHoles.get(i);
+            setGravity(b.getX(), b.getY(), 5, Force.ATTRACT, dt);
         }
         
         follow(player.getX(), player.getY());
