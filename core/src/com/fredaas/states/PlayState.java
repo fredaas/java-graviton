@@ -127,6 +127,23 @@ public class PlayState extends GameState {
             }
         }
         
+        /*
+         * Remove trackers that are sucked into a black hole
+         */
+        for (int i = 0; i < trackers.size(); i++) {
+            StandardTracker t = trackers.get(i);
+            for (int j = 0; j < blackHoles.size(); j++) {
+                BlackHole h = blackHoles.get(j);
+                float dx = t.getX() - h.getX();
+                float dy = t.getY() - h.getY();
+                double dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < t.getRadius()) {
+                    trackers.remove(i);
+                    i--;
+                }
+            }
+        }
+        
         handleInput();
     }
     
