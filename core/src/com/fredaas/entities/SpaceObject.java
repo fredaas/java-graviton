@@ -52,7 +52,7 @@ public abstract class SpaceObject {
     }
     
     protected void setGravity(float x, float y, float strength, Force force, float dt) {
-        setAngle(x, y);
+        setDirection(x, y);
         
         switch (force) {
             case REPEL:
@@ -72,7 +72,7 @@ public abstract class SpaceObject {
         ty = 0; 
     }
     
-    protected void setAngle(float x, float y) {
+    protected void setDirection(float x, float y) {
         float deltaX = this.x - x;
         float deltaY = this.y - y;
         

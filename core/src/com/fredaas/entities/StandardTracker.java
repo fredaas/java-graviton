@@ -50,7 +50,7 @@ public class StandardTracker extends SpaceObject {
     }
     
     private void follow(float x, float y) {
-        setAngle(x, y);
+        setDirection(x, y);
         
         dx = MathUtils.cos(rad) * (distance + 50) * xSpeed;
         dy = MathUtils.sin(rad) * (distance + 50) * ySpeed;

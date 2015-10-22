@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.fredaas.main.Game;
+import com.fredaas.states.PlayState;
 
 public class Player extends SpaceObject {
     
@@ -193,6 +194,13 @@ public class Player extends SpaceObject {
         if(speed > maxSpeed) {
             dx = (dx / speed) * maxSpeed;
             dy = (dy / speed) * maxSpeed;
+        }
+        
+        ArrayList<BlackHole> blackHoles = PlayState.blackHoles;
+        
+        for (int i = 0; i < blackHoles.size(); i++) {
+            BlackHole h = blackHoles.get(i);
+            setGravity(h.getX(), h.getY(), 5, Force.ATTRACT, dt);
         }
         
         x += dx * dt;

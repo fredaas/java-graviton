@@ -45,7 +45,7 @@ public class PlayState extends GameState {
         createAsteroids(10);
         createStars(500);
         createTrackers(50);
-        createBlackHoles(4);
+        createBlackHoles(1);
     }
     
     @Override
@@ -136,7 +136,7 @@ public class PlayState extends GameState {
                 BlackHole h = blackHoles.get(j);
                 float dx = t.getX() - h.getX();
                 float dy = t.getY() - h.getY();
-                double dist = Math.sqrt(dx * dx + dy * dy);
+                float dist = (float) Math.sqrt(dx * dx + dy * dy);
                 if (dist < t.getRadius()) {
                     trackers.remove(i);
                     i--;
