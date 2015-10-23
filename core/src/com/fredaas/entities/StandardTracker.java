@@ -50,8 +50,7 @@ public class StandardTracker extends SpaceObject {
     }
     
     private void follow(float x, float y) {
-        setDirection(x, y);
-        
+        rad = setDirection(x, y);
         dx = MathUtils.cos(rad) * (distance + 50) * xSpeed;
         dy = MathUtils.sin(rad) * (distance + 50) * ySpeed;
     }
@@ -86,7 +85,7 @@ public class StandardTracker extends SpaceObject {
          */
         for (int i = 0; i < blackHoles.size(); i++) {
             BlackHole b = blackHoles.get(i);
-            setGravity(b.getX(), b.getY(), 5, Force.ATTRACT, dt);
+            setGravity(b.getX(), b.getY(), 15, Force.ATTRACT, dt);
         }
         
         follow(player.getX(), player.getY());

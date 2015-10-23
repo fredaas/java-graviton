@@ -45,7 +45,7 @@ public class PlayState extends GameState {
         createAsteroids(10);
         createStars(500);
         createTrackers(50);
-        createBlackHoles(1);
+        createBlackHoles(10);
     }
     
     @Override

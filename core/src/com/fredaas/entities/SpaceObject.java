@@ -26,6 +26,7 @@ public abstract class SpaceObject {
     protected float ySpeed;
     protected float radOffset;
     protected float distance;
+    private float angle;
     public static enum Force {
         REPEL,
         ATTRACT;
@@ -66,30 +67,34 @@ public abstract class SpaceObject {
         this.x += tx * dt;
         this.y += ty * dt;
         
-        dx = 0;
-        dy = 0;
-        tx = 0;
-        ty = 0; 
+        clearValues();
     }
     
-    protected void setDirection(float x, float y) {
+    private void clearValues() {
+        tx = 0;
+        ty = 0;
+    }
+    
+    protected float setDirection(float x, float y) {
         float deltaX = this.x - x;
         float deltaY = this.y - y;
         
-        rad = MathUtils.atan2(deltaY, deltaX);
+        angle = MathUtils.atan2(deltaY, deltaX);
         
-        if (rad < PI) {
-            rad += PI;
+        if (angle < PI) {
+            angle += PI;
         }
         
         distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        
+        return angle;
     }
     
     private void setForce(float direction, float strength) {
         float delta = PlayState.map.getRadius();
         
-        tx = MathUtils.cos(rad) * (delta / distance) * direction * strength;
-        ty = MathUtils.sin(rad) * (delta / distance) * direction * strength;
+        tx = MathUtils.cos(angle) * (delta / distance) * direction * strength;
+        ty = MathUtils.sin(angle) * (delta / distance) * direction * strength;
     }
     
     public float[] getPosX() {

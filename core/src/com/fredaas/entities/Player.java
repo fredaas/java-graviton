@@ -117,6 +117,13 @@ public class Player extends SpaceObject {
     
     @Override
     public void update(float dt) {
+        ArrayList<BlackHole> blackHoles = PlayState.blackHoles;
+        
+        for (int i = 0; i < blackHoles.size(); i++) {
+            BlackHole h = blackHoles.get(i);
+            setGravity(h.getX(), h.getY(), 20, Force.ATTRACT, dt);
+        }
+        
         if (rad < 0) {
             rad += 2 * PI;
         }
@@ -194,13 +201,6 @@ public class Player extends SpaceObject {
         if(speed > maxSpeed) {
             dx = (dx / speed) * maxSpeed;
             dy = (dy / speed) * maxSpeed;
-        }
-        
-        ArrayList<BlackHole> blackHoles = PlayState.blackHoles;
-        
-        for (int i = 0; i < blackHoles.size(); i++) {
-            BlackHole h = blackHoles.get(i);
-            setGravity(h.getX(), h.getY(), 5, Force.ATTRACT, dt);
         }
         
         x += dx * dt;
