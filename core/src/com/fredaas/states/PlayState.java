@@ -157,9 +157,6 @@ public class PlayState extends GameState {
     
     private void evaluateComboCounter(float x, float y) {
         switch(comboCounter) {
-            case 60:
-                points.add(new Points(x, y, comboCounter * 1000));
-                break;
             case 30:
                 points.add(new Points(x, y, comboCounter * 1000));
                 break;
