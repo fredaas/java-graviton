@@ -26,7 +26,11 @@ public class PlayState extends GameState {
     public static ArrayList<StandardTracker> trackers;
     public static ArrayList<BlackHole> blackHoles;
     public static ArrayList<Points> points;
-
+    private long comboTimerStart;
+    private long comboTimerDelay = 1000;
+    private long comboTimerDiff;
+    private int comboCounter;
+    
     public PlayState(GameStateManager gsm) {
         this.gsm = gsm;
         init();
@@ -46,6 +50,7 @@ public class PlayState extends GameState {
         createStars(500);
         createTrackers(50);
         createBlackHoles(10);
+        comboCounter = 0;
     }
     
     @Override
@@ -138,14 +143,51 @@ public class PlayState extends GameState {
                 float dy = t.getY() - h.getY();
                 float dist = (float) Math.sqrt(dx * dx + dy * dy);
                 if (dist < t.getRadius()) {
-                    points.add(new Points(t.getX(), t.getY()));
+                    setComboCounter(1);
+                    evaluateComboCounter(h.getX(), h.getY());
                     trackers.remove(i);
                     i--;
                 }
             }
         }
         
+        resetComboTimer();
         handleInput();
+    }
+    
+    private void evaluateComboCounter(float x, float y) {
+        switch(comboCounter) {
+            case 60:
+                points.add(new Points(x, y, comboCounter * 1000));
+                break;
+            case 30:
+                points.add(new Points(x, y, comboCounter * 1000));
+                break;
+            case 15:
+                points.add(new Points(x, y, comboCounter * 500));
+                break;
+            case 5:
+                points.add(new Points(x, y, comboCounter * 100));
+                break;
+        }
+    }
+    
+    private void resetComboTimer() {
+        comboTimerDiff = (System.nanoTime() - comboTimerStart) / 1000000;
+        if (comboTimerDiff > comboTimerDelay) {
+            comboTimerDiff = 0;
+            comboTimerStart = 0;
+            comboCounter = 0;
+        }
+    }
+    
+    private void setComboTimer() {
+        comboTimerStart = System.nanoTime();
+    }
+    
+    private void setComboCounter(int value) {
+        comboCounter += value;
+        setComboTimer();
     }
     
     @Override

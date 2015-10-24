@@ -22,12 +22,13 @@ public class Points {
     private SpriteBatch sb;
     private BitmapFont bmf;
     private GlyphLayout text;
-    private String score = "1000";
+    private int score;
     
-    public Points(float x, float y) {
+    public Points(float x, float y, int score) {
         init();
         this.x = x;
         this.y = y;
+        this.score = score;
     }
     
     private void init() {
@@ -61,7 +62,7 @@ public class Points {
         sb.setProjectionMatrix(Game.cam.combined);
         sb.begin();
         bmf.setColor(1, 1, 1, alpha);
-        text.setText(bmf, score);
+        text.setText(bmf, Integer.toString(score));
         bmf.draw(sb, text, x, y);
         sb.end();
     }
