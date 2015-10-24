@@ -138,6 +138,7 @@ public class PlayState extends GameState {
                 float dy = t.getY() - h.getY();
                 float dist = (float) Math.sqrt(dx * dx + dy * dy);
                 if (dist < t.getRadius()) {
+                    points.add(new Points(t.getX(), t.getY()));
                     trackers.remove(i);
                     i--;
                 }
