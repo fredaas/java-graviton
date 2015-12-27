@@ -19,8 +19,6 @@ public class GameKeys {
     private static final int NUM_KEYS = Key.values().length;
     private static boolean prev[] = new boolean[NUM_KEYS];
     private static boolean curr[] = new boolean[NUM_KEYS];
-    private static boolean keyCurr;
-    private static boolean keyPrev;
 
     public GameKeys() {
     }
@@ -29,7 +27,6 @@ public class GameKeys {
         for (int i = 0; i < NUM_KEYS; i++) {
             prev[i] = curr[i];
         }
-        keyPrev = keyCurr;
     }
 
     public static void setKey(Key k, boolean b) {
@@ -38,6 +35,10 @@ public class GameKeys {
     
     public static boolean isDown(Key k) {
         return curr[k.value];
+    }
+    
+    public static boolean isPressed(Key k) {
+        return curr[k.value] && !prev[k.value];
     }
 
 }

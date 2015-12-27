@@ -20,7 +20,8 @@ public class Game implements ApplicationListener {
     private GameStateManager gsm;
     private ShapeRenderer sr;
 
-    public Game() {}
+    public Game() {
+    }
 
     private void init() {
         sr = new ShapeRenderer();
@@ -45,6 +46,7 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw(sr);
+        viewport.update(WIDTH, HEIGHT);
     }
 
     @Override

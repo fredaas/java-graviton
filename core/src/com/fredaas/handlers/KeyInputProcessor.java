@@ -6,7 +6,8 @@ import com.fredaas.handlers.GameKeys.Key;
 
 public class KeyInputProcessor extends InputAdapter {
 
-    public KeyInputProcessor() {}
+    public KeyInputProcessor() {
+    }
 
     @Override
     public boolean keyDown(int keyCode) {
@@ -25,9 +26,10 @@ public class KeyInputProcessor extends InputAdapter {
         if (keyCode == Keys.F) {
             GameKeys.setKey(Key.F, true);
         }
-
+        
         return true;
     }
+
 
     @Override
     public boolean keyUp(int keyCode) {
@@ -47,7 +49,7 @@ public class KeyInputProcessor extends InputAdapter {
             GameKeys.setKey(Key.F, false);
         }
 
-        return true;
+        return false;
     }
 
 }

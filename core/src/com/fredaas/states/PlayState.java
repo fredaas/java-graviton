@@ -255,7 +255,8 @@ public class PlayState extends GameState {
         player.setLeft(GameKeys.isDown(Key.LEFT));
         player.setRight(GameKeys.isDown(Key.RIGHT));
         player.setUp(GameKeys.isDown(Key.UP));
-        player.setFire(GameKeys.isDown(Key.F));
+        player.setFire(GameKeys.isPressed(Key.F));
+        GameKeys.update();
     }
     
 }
