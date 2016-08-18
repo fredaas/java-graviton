@@ -119,9 +119,11 @@ public class Player extends SpaceObject {
     public void update(float dt) {
         ArrayList<BlackHole> blackHoles = PlayState.blackHoles;
         
-        for (int i = 0; i < blackHoles.size(); i++) {
-            BlackHole h = blackHoles.get(i);
-            setGravity(h.getX(), h.getY(), 20, Force.ATTRACT, dt);
+        if (!dead) {
+            for (int i = 0; i < blackHoles.size(); i++) {
+                BlackHole h = blackHoles.get(i);
+                setGravity(h.getX(), h.getY(), 20, Force.ATTRACT, dt);
+            }
         }
         
         if (rad < 0) {

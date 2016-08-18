@@ -82,6 +82,16 @@ public class PlayState extends GameState {
         }
         
         /*
+         * Check for collision between player and black holes
+         */
+        for (int i = 0; i < blackHoles.size(); i++) {
+            if (blackHoles.get(i).contains(player.getX(), player.getY())) {
+                player.isDead(true);
+                break;
+            }
+        }
+        
+        /*
          * Check for collision between player and asteroids
          */
         for (int i = 0; i < asteroids.size(); i++) {
@@ -90,8 +100,7 @@ public class PlayState extends GameState {
             float[] posy = a.getPosY();
             for (int j = 0; j < a.numPoints(); j++) {
                 if (player.contains(posx[j], posy[j])) {
-                    asteroids.remove(i);
-                    i--;
+                    player.isDead(true);
                     break;
                 }
             }
